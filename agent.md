@@ -44,7 +44,6 @@ model Docker's `overlay2` storage driver uses for container images.
 ├── unionfs_cli.sh            # interactive REPL for manual testing (executable)
 ├── run-in-docker.sh          # macOS -> Colima/Docker build+run wrapper
 ├── .demo.sh                  # scripted CoW + whiteout demo, run by run-in-docker.sh demo
-├── .fuse3-headers/           # vendored fuse3 public headers, for editor/macOS syntax checking
 ├── src/
 │   ├── unionfs.h              # class UnionFs, RAII (Fd/Dir), fuse_guard, sys_error,
 │   │                          #   path helpers (upper_path/lower_path/whiteout_path),
@@ -355,7 +354,7 @@ expand its flags. The scripts also use Linux-only tooling: `mountpoint -q`,
 `fusermount -u`, and `stat -c '%s'` (GNU format; BSD `stat` uses `-f %z`). Installing
 macFUSE does **not** fix this cleanly — macFUSE targets the FUSE 2.x API, while this
 project requires fuse3. The C++ source itself compiles cleanly on macOS against the
-vendored `.fuse3-headers/` — it's the link step and the runtime (FUSE needs a Linux
+standard fuse3 public headers — it's the link step and the runtime (FUSE needs a Linux
 kernel driver) that fail, not the language.
 
 **The working path:** build and test inside a Linux container on a Colima VM. FUSE in a

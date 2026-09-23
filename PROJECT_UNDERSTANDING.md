@@ -54,7 +54,6 @@ lower_dir/        read-only "image" layer — NEVER written to (one narrow excep
 ├── unionfs_cli.sh              interactive REPL for manual testing
 ├── run-in-docker.sh            macOS→Colima/Docker build+run wrapper
 ├── .demo.sh                    scripted CoW + whiteout demo payload
-├── .fuse3-headers/             vendored fuse3 3.10.5 headers (editor/macOS syntax checking)
 ├── mini_unionfs                build output — gitignored
 ├── src/
 │   ├── unionfs.h        class UnionFs, RAII (Fd/Dir), fuse_guard, sys_error, path
@@ -445,8 +444,8 @@ expand its flags. The scripts also assume GNU/Linux tooling: `mountpoint -q`,
 `fusermount -u`, and `stat -c '%s'` (BSD `stat` uses `-f %z`). Installing macFUSE does not
 fix it — macFUSE targets the FUSE **2.x** API and this project requires fuse3.
 
-The C++ source itself compiles cleanly on macOS against the vendored
-`.fuse3-headers/` (`g++ -std=c++20 -I.fuse3-headers -c ...`, zero warnings) — it's the
+The C++ source itself compiles cleanly on macOS against the standard fuse3 public
+headers (`g++ -std=c++20 -I<path-to-fuse3-headers> -c ...`, zero warnings) — it's the
 link step and the FUSE kernel driver requirement that fail, not the language.
 
 **Use the container path:**
